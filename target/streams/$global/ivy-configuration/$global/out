@@ -1,0 +1,17 @@
+[0m[[0mdebug[0m] [0mOther repositories:[0m
+[0m[[0mdebug[0m] [0mDefault repositories:[0m
+[0m[[0mdebug[0m] [0m	Raw(ProjectResolver(inter-project, mapped: ))[0m
+[0m[[0mdebug[0m] [0m	FileRepository(local,FileConfiguration(true,None),sbt.Patterns@97f4804)[0m
+[0m[[0mdebug[0m] [0m	URLRepository(typesafe-ivy-releases,sbt.Patterns@506937f9)[0m
+[0m[[0mdebug[0m] [0m	public: http://repo1.maven.org/maven2/[0m
+[0m[[0mdebug[0m] [0mUsing inline dependencies specified in Scala.[0m
+[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-library;2.9.2 ...[0m
+[0m[[0minfo[0m] [0mResolving net.databinder.dispatch#core_2.9.2;0.9.0-beta1 ...[0m
+[0m[[0minfo[0m] [0mResolving com.ning#async-http-client;1.7.4 ...[0m
+[0m[[0minfo[0m] [0mResolving io.netty#netty;3.4.1.Final ...[0m
+[0m[[0minfo[0m] [0mResolving org.slf4j#slf4j-api;1.6.2 ...[0m
+[0m[[0minfo[0m] [0mResolving net.liftweb#lift-json_2.9.1;2.4 ...[0m
+[0m[[0minfo[0m] [0mResolving com.thoughtworks.paranamer#paranamer;2.3 ...[0m
+[0m[[0minfo[0m] [0mResolving org.scala-lang#scalap;2.9.1 ...[0m
+[0m[[0minfo[0m] [0mResolving org.scala-lang#scala-compiler;2.9.2 ...[0m
+[0m[[0minfo[0m] [0mResolving org.scala-sbt#launcher-interface;0.12.0-RC2 ...[0m
