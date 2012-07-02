@@ -54,7 +54,7 @@ class Gist extends Authorize
         opts.content match {
           case Some(content) =>
             mk(Seq(File(opts.name.getOrElse("gistfile.txt"), content)),
-               public = false)().fold(err, {
+               public = opts.public)().fold(err, {
               gs =>
                 ok(gs.map(show).mkString("\n"))
             })
