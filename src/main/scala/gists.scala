@@ -7,7 +7,7 @@ import net.liftweb.json.JsonDSL._
 case class File(name: String, content: String, size: Int = 0)
 
 case class GistRef(id: String, url: String, htmlUrl: String, desc: String,
-                   created: String, public: Boolean,                   
+                   created: String, public: Boolean,
                    files: Seq[File] = Seq.empty[File],
                    author: String = "")
 
