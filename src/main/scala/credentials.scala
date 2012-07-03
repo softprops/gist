@@ -9,4 +9,5 @@ trait Credentials extends DispatchExtras {
                      req.subject.addQueryParameter("access_token", access)
                      req
                    }).getOrElse(req)
+  def authorized = Config.get(Authorize.Login)
 }
