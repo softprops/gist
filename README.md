@@ -4,7 +4,7 @@ gist: it's like git with an s between the i and t.
 
 ## usage
 
- Gist is a client of a github server. You will need a github login to do useful things like:
+ Gist is a client of a github service. You will need a github login to do useful things like:
  
  Authenticate
  
