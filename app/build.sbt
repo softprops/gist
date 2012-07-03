@@ -14,3 +14,5 @@ libraryDependencies <+= (sbtVersion)(
   "org.scala-sbt" %
    "launcher-interface" %
     _ % "provided")
+
+libraryDependencies += "org.slf4j" % "slf4j-jdk14" % "1.6.2"
