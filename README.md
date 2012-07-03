@@ -64,6 +64,6 @@ Unstart a gist
     
 Delete a gist
 
-    git rm :id
+    gist rm :id
     
 Doug Tangren (softprops) 2012
