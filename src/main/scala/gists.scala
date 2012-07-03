@@ -4,7 +4,7 @@ import dispatch._
 import net.liftweb.json._
 import net.liftweb.json.JsonDSL._
 
-case class File(name: String, content: String)
+case class File(name: String, content: String, size: Int = 0)
 
 case class GistRef(id: String, url: String, htmlUrl: String, desc: String,
                    created: String, public: Boolean,
@@ -25,7 +25,8 @@ trait Serialization {
         JObject(ffields) <- files
         JField(name, JObject(props)) <- ffields
         JField("content", JString(content)) <- props
-      } yield File(name, content))
+        JField("size", JInt(size)) <- props
+      } yield File(name, content, size.toInt))
     }
 
   def fromGists(js: JValue) =

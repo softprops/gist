@@ -97,7 +97,7 @@ object Script {
                          bold(ref.id),
                          ref.htmlUrl,
                          ref.desc,
-                         ref.files.map(f => "\n - %s" format f.name).mkString("\n"))
+                         ref.files.map(f => "\n * %s (%s)" format(f.name, f.size)).mkString("\n"))
 
   private def cat(ref: GistRef) =
     ref.files.map(f => "%s\n\n%s".format(bold("* " + f.name), f.content)).mkString("\n\n")
