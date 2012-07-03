@@ -1,7 +1,7 @@
 [app]
   version: 0.1.0-SNAPSHOT
   org: me.lessis
-  name: gist
+  name: gist-script
   class: gist.Script
 [scala]
   version: 2.9.2
