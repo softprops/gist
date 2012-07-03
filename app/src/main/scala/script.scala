@@ -124,6 +124,7 @@ object Script {
         def consume(scan: Scanner, buf: StringBuffer): Int = {
           if (scan.hasNextLine()) {
             buf.append(scan.nextLine)
+            buf.append("\n")
             consume(scan, buf)
           } else f(buf.toString)
         }
