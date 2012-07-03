@@ -11,8 +11,8 @@ object Script {
                      public: Boolean = true)
 
   val http = Http
-  def parseExtras(extras: Iterable[String]) = {
-    val it = extras.iterator
+  def parseOptions(options: Iterable[String]) = {
+    val it = options.iterator
     (Options() /: it)({
       (a, e) => e match {
         case "-p" => a.copy(public = false)
@@ -55,10 +55,10 @@ object Script {
           ok(gs.map(show).mkString("\n"))
         })
       case List("push", extras @ _*) =>
-        val opts = parseExtras(extras)
+        val opts = parseOptions(extras)
         opts.content match {
           case Some(content) =>
-            gist.mk(Seq(File(opts.name.getOrElse("gistfile.txt"), content)),
+            gist.mk(Seq(File(opts.name.getOrElse(""), content)),
                public = opts.public)().fold(err, {
               gs =>
                 ok(gs.map(show).mkString("\n"))
@@ -67,9 +67,10 @@ object Script {
             err("content required")
         }
       case List("--", extras @ _*) =>
+        val opts = parseOptions(extras)
         piped(System.in) { content =>
-          gist.mk(Seq(File("", content)),
-             public = false)().fold(err, {
+          gist.mk(Seq(File(opts.name.getOrElse(""), content)),
+             public = opts.public)().fold(err, {
             gs =>
               ok(gs.map(show).mkString("\n"))
           })
