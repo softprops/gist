@@ -92,12 +92,12 @@ object Script {
         gist.star(sha, set)().fold(err, {
           _ => ok("%s %s" format(if (set) "starred" else "unstarred", sha))
         })
-      case List("help") =>
-        ok("usage: [auth|cat|help|push|user|show|star|+|-] ...")
-      case _ =>
+      case List("ls")  =>
         gist.all().fold(err, { gs =>
           ok(gs.map(show).mkString("\n"))
         })
+      case _ =>
+        ok("usage: [auth|cat|push|ls|user|show|star|+|-] ...")
     })
   }
 
