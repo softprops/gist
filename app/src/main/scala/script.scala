@@ -22,6 +22,10 @@ object Script {
     })
   }
 
+  def cleanSha(shalike: String) =
+    if (shalike.startsWith("https://gist.github.com/")) shalike.replaceFirst("https://gist.github.com/", "")
+    else shalike
+
   def apply(args: Array[String]): Int = {
     val gist = new Gist(http)
     val AuthCredentials = """^(.+):(.+)""".r
@@ -47,11 +51,11 @@ object Script {
           ok(gs.map(show).mkString("\n"))
         })
       case List("cat", sha) =>
-        gist.id(sha)().fold(err, { gs =>
+        gist.id(cleanSha(sha))().fold(err, { gs =>
           ok(gs.map(cat).mkString("\n"))
         })
       case List("show", sha) =>
-        gist.id(sha)().fold(err, { gs =>
+        gist.id(cleanSha(sha))().fold(err, { gs =>
           ok(gs.map(show).mkString("\n"))
         })
       case List("push", extras @ _*) =>
@@ -76,24 +80,25 @@ object Script {
           })
         }
       case List("rm", sha) =>
-        gist.rm(sha)().fold(err, {
+        gist.rm(cleanSha(sha))().fold(err, {
           _ => ok("deleted %s" format sha)
         })
       case List("+", sha) =>
-        gist.visibility(sha, true)().fold(err, {
+        gist.visibility(cleanSha(sha), true)().fold(err, {
           _ => ok("anyone can now see %s" format sha)
         })
       case List("-", sha) =>
-        gist.visibility(sha, false)().fold(err, {
+        gist.visibility(cleanSha(sha), false)().fold(err, {
           _ => ok("only you can see %s" format sha)
         })
       case List("star", sha, extras @ _*) =>
         val set = !extras.contains("-d")
-        gist.star(sha, set)().fold(err, {
+        gist.star(cleanSha(sha), set)().fold(err, {
           _ => ok("%s %s" format(if (set) "starred" else "unstarred", sha))
         })
-      case List("ls")  =>
-        gist.all().fold(err, { gs =>
+      case List("ls", extras @ _*)  =>
+        val req = if (extras.contains("-p")) gist.public else gist.all
+        req().fold(err, { gs =>
           ok(gs.map(show).mkString("\n"))
         })
       case _ =>
@@ -111,14 +116,16 @@ object Script {
     Console.BOLD + txt + Console.RESET
 
   private def show(ref: GistRef) =
-    "%s %s %s %s %s" format(if (ref.public) "+" else "-",
+    "%s %s %s <%s> %s %s" format(if (ref.public) "+" else "-",
                          bold(ref.id),
                          ref.htmlUrl,
+                         ref.author,
                          ref.desc,
                          ref.files.map(f => "\n * %s (%s)" format(f.name, f.size)).mkString("\n"))
 
   private def cat(ref: GistRef) =
-    ref.files.map(f => "%s\n\n%s".format(bold("* " + f.name), f.content)).mkString("\n\n")
+    if (ref.files.isEmpty) "gist %s contained no files" format ref.id
+    else ref.files.map(f => "%s\n\n%s".format(bold("* " + f.name), f.content)).mkString("\n\n")
 
   private def err(msg: Throwable): Int =
     err(msg.getMessage())

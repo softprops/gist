@@ -7,8 +7,9 @@ import net.liftweb.json.JsonDSL._
 case class File(name: String, content: String, size: Int = 0)
 
 case class GistRef(id: String, url: String, htmlUrl: String, desc: String,
-                   created: String, public: Boolean,
-                   files: Seq[File] = Seq.empty[File])
+                   created: String, public: Boolean,                   
+                   files: Seq[File] = Seq.empty[File],
+                   author: String = "")
 
 trait Serialization {
   def fromGist(js: JValue) =
@@ -19,14 +20,16 @@ trait Serialization {
       JField("html_url", JString(hurl)) <- fields
       JField("created_at", JString(created)) <- fields
       JField("public", JBool(public)) <- fields
-      JField("files", files) <- fields
+      JField("files", JObject(files)) <- fields
+      JField("user", JObject(user)) <- fields
     } yield {
       GistRef(id, url, hurl, "", created, public, files = for {
-        JObject(ffields) <- files
-        JField(name, JObject(props)) <- ffields
-        JField("content", JString(content)) <- props
-        JField("size", JInt(size)) <- props
-      } yield File(name, content, size.toInt))
+        JField(name, JObject(ffields)) <- files
+        JField("content", JString(content)) <- ffields
+        JField("size", JInt(size)) <- ffields
+      } yield File(name, content, size.toInt), author = (for {
+        JField("login", JString(login)) <- user
+      } yield login).head)
     }
 
   def fromGists(js: JValue) =
@@ -39,8 +42,12 @@ trait Serialization {
       JField("description", JString(desc)) <- fields
       JField("created_at", JString(created)) <- fields
       JField("public", JBool(public)) <- fields
+      JField("user", user) <- fields
     } yield {
-      GistRef(id, url, hurl, desc, created, public)
+      GistRef(id, url, hurl, desc, created, public, author = (for {
+        JObject(ufields) <- user
+        JField("login", JString(login)) <- ufields
+      } yield login).head)
     }
 }
 
@@ -54,11 +61,11 @@ trait Gists extends Serialization { self: Gist =>
       .either.right.map(fromGist)
 
   def user(name: String) =
-    self.http(self.withCredentials(self.api / "users" / name / "gists").subject > /*Ok*/ Json.parsed)
+    self.http(self.withCredentials(self.api / "users" / name / "gists").subject > Json.parsed)
              .either.right.map(fromGists)
 
   def id(sha: String) =
-    self.http(self.withCredentials(self.api / "gists" / sha).subject > /*OK*/ Json.parsed)
+    self.http(self.withCredentials(self.api / "gists" / sha).subject > Json.parsed)
              .either.right.map(fromGist)
 
   def visibility(sha: String, public: Boolean) =
@@ -73,6 +80,10 @@ trait Gists extends Serialization { self: Gist =>
 
   def rm(sha: String) =
     self.http(self.withCredentials(self.api.DELETE / "gists" / sha).subject > As.string).either
+
+  def public =
+    self.http(self.withCredentials(self.api / "gists" / "public").subject > Json.parsed)
+              .either.right.map(fromGists)
 
   def all =
     self.http(self.withCredentials(self.api / "gists").subject >  /*Ok*/ Json.parsed)
