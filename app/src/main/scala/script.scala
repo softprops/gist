@@ -75,8 +75,25 @@ object Script {
               ok(gs.map(show).mkString("\n"))
           })
         }
+      case List("rm", sha) =>
+        gist.rm(sha)().fold(err, {
+          _ => ok("deleted %s" format sha)
+        })
+      case List("+", sha) =>
+        gist.visibility(sha, true)().fold(err, {
+          _ => ok("anyone can now see %s" format sha)
+        })
+      case List("-", sha) =>
+        gist.visibility(sha, false)().fold(err, {
+          _ => ok("only you can see %s" format sha)
+        })
+      case List("star", sha, extras @ _*) =>
+        val set = !extras.contains("-d")
+        gist.star(sha, set)().fold(err, {
+          _ => ok("%s %s" format(if (set) "starred" else "unstarred", sha))
+        })
       case List("help") =>
-        ok("usage: [auth|cat|help|post|user|show] ...")
+        ok("usage: [auth|cat|help|push|user|show|star|+|-] ...")
       case _ =>
         gist.all().fold(err, { gs =>
           ok(gs.map(show).mkString("\n"))
@@ -136,7 +153,6 @@ object Script {
     check
   }
 }
-
 
 object Main {
   def main(args: Array[String]) {
