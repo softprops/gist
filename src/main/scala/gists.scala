@@ -76,11 +76,6 @@ trait Gists extends Serialization { self: Gist =>
     self.http(self.withCredentials(self.api / "gists" / sha).subject > Json.parsed)
              .either.right.map(fromGist)
 
-  def visibility(sha: String, public: Boolean) =
-    self.http(self.withCredentials(self.api.PATCH / "gists" / sha).subject.setBody(compact(render(
-      ("public" -> public)
-    )))  > Json.parsed).either
-
   def star(sha: String, set: Boolean = true) = {
     val base = self.withCredentials(self.api / "gists" / sha / "star")
     self.http((if (set) base.PUT else base.DELETE) > As.string).either

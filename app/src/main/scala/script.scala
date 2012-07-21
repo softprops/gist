@@ -106,18 +106,6 @@ object Script {
         })
       case List("rm") =>
         err("usage: gist rm <id>")
-      case List("+", sha) =>
-        gist.visibility(cleanSha(sha), true)().fold(err, {
-          _ => ok("anyone can now see %s" format sha)
-        })
-      case List("+") =>
-        err("usage: gist + <id>")
-      case List("-", sha) =>
-        gist.visibility(cleanSha(sha), false)().fold(err, {
-          _ => ok("only you can see %s" format sha)
-        })
-      case List("-") =>
-        err("usage: gist - <id>")
       case List("star", sha, extras @ _*) =>
         val set = !extras.contains("-d")
         gist.star(cleanSha(sha), set)().fold(err, {
@@ -131,7 +119,7 @@ object Script {
           ok(gs.map(show).mkString("\n"))
         })
       case _ =>
-        ok("usage: gist [auth|cat|push|ls|user|show|star|+|-] ...")
+        ok("usage: gist [auth|cat|push|ls|user|show|star] ...")
     })
   }
 
