@@ -1,0 +1,25 @@
+{
+  "organization" : "me.lessis",
+  "name" : "gist",
+  "version" : "0.1.0",
+  "description" : "gist it like you mean it",
+  "site" : "https://github.com/softprops/gist/",
+  "tags" : [ "github", "gist" ],
+  "docs" : "",
+  "resolvers" : [ "https://oss.sonatype.org/content/repositories/releases" ],
+  "dependencies" : [ {
+    "organization" : "net.databinder.dispatch",
+    "name" : "core",
+    "version" : "0.9.0-beta1"
+  }, {
+    "organization" : "net.liftweb",
+    "name" : "lift-json_2.9.1",
+    "version" : "2.4"
+  } ],
+  "scalas" : [ "2.9.2" ],
+  "licenses" : [ {
+    "name" : "MIT",
+    "url" : "https://github.com/softprops/gist/blob/0.1.0/LICENSE"
+  } ],
+  "sbt" : false
+}
