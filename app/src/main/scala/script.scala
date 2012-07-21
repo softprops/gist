@@ -44,6 +44,20 @@ object Script {
           case Some(login) => ok("deleted authorization for %s" format login)
           case _ => err("failed to deauthenticate")
         }
+      case List("auth") =>
+        Console.readLine("enter login:password ") match {
+          case AuthCredentials(user, pass) =>
+            gist.auth(user, pass)().fold(err, {
+              _ match {
+                case Right(access) =>
+                  ok("authorized %s" format user)
+                case Left(ae) =>
+                  err("error authenticating: %s" format ae)
+              }
+            })
+          case _ =>
+            err("expected format login:password")
+        }
       case List("whoami") =>
         ok(gist.authorized.getOrElse("nobody"))
       case List("user", name) =>
