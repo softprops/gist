@@ -16,7 +16,8 @@ trait Authorize { self: Gist =>
   
   def deauth =
     Config.get(AccessId) map { id =>
-      self.http(self.withCredentials(authorizations.DELETE / id).subject > As.string)
+      self.http(self.withCredentials(
+        authorizations.DELETE / id).subject > As.string)()
       Config.properties { p =>
         val l = p.getProperty(Login)
         p.clear()
