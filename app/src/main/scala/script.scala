@@ -65,14 +65,20 @@ object Script {
         gist.user(name)().fold(err, { gs =>
           ok(gs.map(show).mkString("\n"))
         })
+      case List("user") =>
+        err("usage: gist user <login>")
       case List("cat", sha) =>
         gist.id(cleanSha(sha))().fold(err, { gs =>
           ok(gs.map(cat).mkString("\n"))
         })
+      case List("cat") =>
+        err("usage: gist cat <id>")
       case List("show", sha) =>
         gist.id(cleanSha(sha))().fold(err, { gs =>
           ok(gs.map(show).mkString("\n"))
         })
+      case List("show") =>
+        err("usage: gist show <id>")
       case List("push", extras @ _*) =>
         val opts = parseOptions(extras)
         opts.content match {
@@ -98,26 +104,34 @@ object Script {
         gist.rm(cleanSha(sha))().fold(err, {
           _ => ok("deleted %s" format sha)
         })
+      case List("rm") =>
+        err("usage: gist rm <id>")
       case List("+", sha) =>
         gist.visibility(cleanSha(sha), true)().fold(err, {
           _ => ok("anyone can now see %s" format sha)
         })
+      case List("+") =>
+        err("usage: gist + <id>")
       case List("-", sha) =>
         gist.visibility(cleanSha(sha), false)().fold(err, {
           _ => ok("only you can see %s" format sha)
         })
+      case List("-") =>
+        err("usage: gist - <id>")
       case List("star", sha, extras @ _*) =>
         val set = !extras.contains("-d")
         gist.star(cleanSha(sha), set)().fold(err, {
           _ => ok("%s %s" format(if (set) "starred" else "unstarred", sha))
         })
+      case List("star") =>
+        err("usage: gist star <id>")
       case List("ls", extras @ _*)  =>
         val req = if (extras.contains("-p")) gist.public else gist.all
         req().fold(err, { gs =>
           ok(gs.map(show).mkString("\n"))
         })
       case _ =>
-        ok("usage: [auth|cat|push|ls|user|show|star|+|-] ...")
+        ok("usage: gist [auth|cat|push|ls|user|show|star|+|-] ...")
     })
   }
 
