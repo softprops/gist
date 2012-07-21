@@ -39,12 +39,20 @@ trait Serialization {
       JField("id", JString(id)) <- fields
       JField("url", JString(url)) <- fields
       JField("html_url", JString(hurl)) <- fields
-      JField("description", JString(desc)) <- fields
       JField("created_at", JString(created)) <- fields
       JField("public", JBool(public)) <- fields
       JField("user", user) <- fields
+      desc <- Some(fields.find({
+        case JField("description", JString(_)) =>
+          true
+        case _ =>
+          false
+      }))
     } yield {
-      GistRef(id, url, hurl, desc, created, public, author = (for {
+      GistRef(id, url, hurl, desc match {
+        case Some(JField(_, JString(d))) => d
+        case _ => ""
+      }, created, public, author = (for {
         JObject(ufields) <- user
         JField("login", JString(login)) <- ufields
       } yield login).head)
