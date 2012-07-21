@@ -1,4 +1,4 @@
-Initial release
+Initial release of a [conscript][cs] interface for pretty much the best pastebin ever.
 
 ### Features
 
@@ -9,3 +9,15 @@ Initial release
 ### Install
 
      cs softprops/gist
+
+### Get gisting
+
+    gist auth login:password
+    echo "Hey girl. I gist poems about you all the time." | gist --
+
+### Docs
+
+See the [readme][readme]
+     
+[cs]: https://github.com/n8han/conscript#readme
+[readme]: https://github.com/softprops/gist#readme
