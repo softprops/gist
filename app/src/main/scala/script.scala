@@ -23,7 +23,8 @@ object Script {
   }
 
   def cleanSha(shalike: String) =
-    if (shalike.startsWith("https://gist.github.com/")) shalike.replaceFirst("https://gist.github.com/", "")
+    if (shalike.startsWith("https://gist.github.com/")) shalike.replaceFirst(
+      "https://gist.github.com/", "")
     else shalike
 
   def apply(args: Array[String]): Int = {
@@ -79,10 +80,10 @@ object Script {
             gist.mk(Seq(File(opts.name.getOrElse(""), content)),
                public = opts.public)().fold(err, {
               gs =>
-                ok(gs.map(show).mkString("\n"))
+                ok(gs.map(showOneline).mkString("\n"))
             })
           case _ =>
-            err("content required")
+            err("content (-c) required")
         }
       case List("--", extras @ _*) =>
         val opts = parseOptions(extras)
@@ -90,7 +91,7 @@ object Script {
           gist.mk(Seq(File(opts.name.getOrElse(""), content)),
              public = opts.public)().fold(err, {
             gs =>
-              ok(gs.map(show).mkString("\n"))
+              ok(gs.map(showOneline).mkString("\n"))
           })
         }
       case List("rm", sha) =>
@@ -128,6 +129,9 @@ object Script {
 
   private def bold(txt: String) = 
     Console.BOLD + txt + Console.RESET
+
+  private def showOneline(ref: GistRef) =
+    ref.htmlUrl
 
   private def show(ref: GistRef) =
     "%s %s %s <%s> %s %s" format(if (ref.public) "+" else "-",
