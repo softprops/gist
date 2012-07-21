@@ -45,7 +45,7 @@ object Script {
           case _ => err("failed to deauthenticate")
         }
       case List("whoami") =>
-        ok(gist.authorized.getOrElse("annonymous user"))
+        ok(gist.authorized.getOrElse("nobody"))
       case List("user", name) =>
         gist.user(name)().fold(err, { gs =>
           ok(gs.map(show).mkString("\n"))
