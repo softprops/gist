@@ -1,6 +1,12 @@
 # gist
 
-gist: it's like git with an s between the i and t.
+gist: it's like git with an s between the i and t, on the command line
+
+## install
+
+Using [conscript](https://github.com/n8han/conscript)
+
+   cs softprops/gist
 
 ## usage
 
