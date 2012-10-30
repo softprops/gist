@@ -2,7 +2,7 @@ organization := "me.lessis"
 
 name := "gist-script"
 
-version  := "0.1.1-SNAPSHOT"
+version  := "0.1.1"
 
 description := "conscript interface for gist"
 
