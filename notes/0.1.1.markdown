@@ -8,6 +8,14 @@ Below are a few examples you can run in your favorite terminal emulator.
 
     $ open $(echo "test public" | gist -- -p)
 
+Remember you need to be authenticated to create gists. To see if you are authenticated, check your gh user with
+
+    $ gist whoami
+    
+If you aren't authenticated with github, just type
+
+    $ gist auth
+
 #### Dispatch upgrade
 
 I also took the liberty of updating this version with the latest version of [dispatch][dp]
