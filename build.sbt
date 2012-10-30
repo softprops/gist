@@ -6,10 +6,9 @@ version := "0.1.1-SNAPSHOT"
 
 description := "gist it like you mean it"
 
-libraryDependencies ++= Seq(
-  "net.databinder.dispatch" %% "core" % "0.9.0-beta1",
-  "net.liftweb" % "lift-json_2.9.1" % "2.4"
-)
+libraryDependencies += "net.databinder.dispatch" %% "dispatch-lift-json" % "0.9.3"
+
+scalacOptions += Opts.compile.deprecation
 
 publishTo := Some(Opts.resolver.sonatypeStaging)
 

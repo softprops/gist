@@ -17,7 +17,7 @@ trait Authorize { self: Gist =>
   def deauth =
     Config.get(AccessId) map { id =>
       self.http(self.withCredentials(
-        authorizations.DELETE / id).subject > As.string)()
+        authorizations.DELETE / id).subject > as.String)()
       Config.properties { p =>
         val l = p.getProperty(Login)
         p.clear()
@@ -30,7 +30,7 @@ trait Authorize { self: Gist =>
           .subject.setBody(compact(render(
             ("note" -> "dispatch_gist") ~
             ("note_url" -> "https://github.com/softprops/gist") ~
-            ("scopes" -> ("gist" :: "user" :: Nil))))) > Json.parsed)
+            ("scopes" -> ("gist" :: "user" :: Nil))))) > as.lift.Json)
                  .either.right.map { js =>
                   (js \ "token", js \ "id") match {
                     case (JString(access), JInt(id)) =>
