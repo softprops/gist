@@ -2,7 +2,7 @@ organization := "me.lessis"
 
 name := "gist"
 
-version  := "0.1.0"
+version := "0.1.1-SNAPSHOT"
 
 description := "gist it like you mean it"
 
