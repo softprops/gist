@@ -8,14 +8,14 @@ import java.util.Scanner
 object Script {
   case class Options(name: Option[String] = None,
                      content: Option[String] = None,
-                     public: Boolean = true)
+                     public: Boolean = false)
 
   val http = Http
   def parseOptions(options: Iterable[String]) = {
     val it = options.iterator
     (Options() /: it)({
       (a, e) => e match {
-        case "-p" => a.copy(public = false)
+        case "-p" => a.copy(public = true)
         case "-c" => if (it.hasNext) a.copy(content = Some(it.next)) else a
         case "-n" => if (it.hasNext) a.copy(name = Some(it.next)) else a
       }
