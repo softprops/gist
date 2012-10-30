@@ -2,9 +2,19 @@
 
 After creating a gist, you can't change it's privacy. It's easy to forget `-p` flag is hard to remember so its easy to post private content. Gists generated with `gist` are now private by default. The `-p` flag now means "make this gist public"
 
+Below are a few examples
+
+    $ open $(echo "test private" | gist --)
+
+    $ open $(echo "test public" | gist -- -p)
+
+#### Dispatch upgrade
+
+I also took the liberty of updating this version with the latest version of [dispatch][dp]
+
 Get the latest version with [conscript][cs]
 
     cs softprops/gist
 
-
 [cs]: https://github.com/n8han/conscript#readme
+[dp]: http://ls.implicit.ly/dispatch/reboot#dispatch-lift-json
