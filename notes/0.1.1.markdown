@@ -1,8 +1,8 @@
 ### Privacy expectations
 
-After creating a gist, you can't change it's privacy. It's easy to forget `-p` flag is hard to remember so its easy to post private content. Gists generated with `gist` are now private by default. The `-p` flag now means "make this gist public"
+After creating a [gist][gist], you can't change it's privacy. The `-p` flag which creates a private gist is hard to remember so it's easy to post private content. Gists generated with `gist` are now __private by default__. The `-p` flag now means "make this gist public"
 
-Below are a few examples
+Below are a few examples you can run in your favorite terminal emulator.
 
     $ open $(echo "test private" | gist --)
 
@@ -16,5 +16,6 @@ Get the latest version with [conscript][cs]
 
     cs softprops/gist
 
+[gist]: https://gist.github.com/
 [cs]: https://github.com/n8han/conscript#readme
 [dp]: http://ls.implicit.ly/dispatch/reboot#dispatch-lift-json
