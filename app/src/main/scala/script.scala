@@ -119,7 +119,7 @@ object Script {
           ok(gs.map(show).mkString("\n"))
         })
       case _ =>
-        ok("usage: gist [auth|cat|push|ls|user|show|star|whoami] ...")
+        ok("usage: gist [auth|cat|push|ls|user|show|star|whoami|--] ...")
     })
   }
 
