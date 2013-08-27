@@ -1,19 +1,14 @@
 package gist
 
-import xsbti.{ AppMain, AppConfiguration }
-
 import dispatch._
 import dispatch.Defaults._
-
 import hubcat._
-
-import org.json4s._
-
 import java.io.InputStream
 import java.util.Scanner
-
+import org.json4s._
 import scala.concurrent.{ Await, Future }
 import scala.concurrent.duration.Duration.Inf
+import xsbti.{ AppMain, AppConfiguration }
 
 object Script {
 
