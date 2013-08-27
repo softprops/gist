@@ -31,7 +31,7 @@ object Script {
   def gists(fjs: Future[JValue]) =
     for (js <- fjs) yield Parse.gists(js)
 
-  sealed trait Cmd {
+  trait Cmd {
     def apply(): Future[Int]
   }
 
@@ -159,6 +159,7 @@ object Script {
                command = Some(l.copy(credentials = Some((user, pass))))
              )
            }
+           case (_, c) => c
          })
 
          cmd("whoami") text("prints out the current user") action {
