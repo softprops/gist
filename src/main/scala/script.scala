@@ -231,7 +231,7 @@ object Script {
            }             
          })
 
-         cmd("user") text("list gists of posted for a given user") action {
+         cmd("user") text("list gists posted by a given user") action {
            case (_, c) => c.copy(command = Some(User()))
          } children(arg[String]("<login>") text("login name of user") action {
            case (login, c) => c.command match {
