@@ -1,12 +1,17 @@
 package gist
 
 import xsbti.{ AppMain, AppConfiguration }
+
 import dispatch._
 import dispatch.Defaults._
+
 import hubcat._
+
 import org.json4s._
-import java.io.{ InputStream, OutputStream }
+
+import java.io.InputStream
 import java.util.Scanner
+
 import scala.concurrent.{ Await, Future }
 import scala.concurrent.duration.Duration.Inf
 
@@ -22,7 +27,8 @@ object Script {
     else shalike
 
   def authorized(f: Client => Future[Int]) =
-     Authorize.client(http).map(f).getOrElse(Future(err("auth required")))
+     Authorize.client(http).map(f)
+              .getOrElse(Future(err("login required")))
 
   def gist(fjs: Future[JValue]) =
     for (js <- fjs) yield Parse.gist(js)
@@ -35,7 +41,6 @@ object Script {
   }
 
   case class Login(credentials: Option[(String, String)] = None) extends Cmd {
-    val AuthCredentials = """^(.+):(.+)""".r
 
     def apply() = credentials.map {
       case (user, pass) => authorize(user, pass)
